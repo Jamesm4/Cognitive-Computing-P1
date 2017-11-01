@@ -92,8 +92,6 @@ if (process.env.VCAP_SERVICES) {
   intentConfidence = .75;
 }
 
-console.log("Confidence Threshold: " + intentConfidence);
-
 // main endpoint
 var previousContext = null;
 app.post('/api/message', function (req, res) {
@@ -142,8 +140,10 @@ app.post('/api/message', function (req, res) {
     return deferred.promise;
 
   })().then(function (data) {
-    if (data.input.text !== "start conversation" && data.intents.length > 0 && data.intents[0].confidence < intentConfidence) {
-      // return discovery data
+
+    if(data.intents.length > 0 && data.intents[0].intent == "subject_filter") {
+
+     // return discovery data
       var response = {
         "input": {"text": req.body.input.text},
         "context": data.context,
@@ -159,7 +159,7 @@ app.post('/api/message', function (req, res) {
           environment_id: environment_id,
           collection_id: collection_id,
           query: req.body.input.text,
-          count: 5
+          count: 10
         },
         (err, data) => {
           if (err) {
@@ -169,19 +169,33 @@ app.post('/api/message', function (req, res) {
           }
 
           if (data.results.length > 0) {
-            for(var i = 0; i < data.results.length; i++) {
-              response.output.text.push(data.results[i]); // keep this use-case agnostic;
+            var randomInt = Math.floor(Math.random() * data.results.length/2);
+            var firstResult = data.results[randomInt];
+            // Find a new article if a field is missing to prevent crash
+            while(firstResult.date === undefined || firstResult.title === undefined) {
+              randomInt = Math.floor(Math.random() * data.results.length/2);
+              firstResult = data.results[randomInt];
             }
-          } else {
+
+            var splitDate = firstResult.date.split('-');
+            splitDate[2] = splitDate[2].slice(0, 2);
+            var joinedDate = splitDate.join("/");
+            var title = firstResult.title.toLowerCase().split(' ').join('_');
+            response.output.text.push(`<a href="https://poly.rpi.edu/${joinedDate}/${title}/">` + firstResult.title + "</a>");
+          }
+          else {
             response.output.text.push("I cannot find an answer to your question.");
           }
 
           return res.json(response);
         }
       );
-    } else {
-      // return conversation data
+
+    }
+    else {
+
       return res.json(data);
+
     }
   });
 });

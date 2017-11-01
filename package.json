@@ -1,5 +1,5 @@
 {
-  "name": "MyVirtualAgent",
+  "name": "PolyVirtualAgent",
   "version": "0.5.1",
   "description": "Chatbot to demo Watson Conversation Service + Watson Discovery Service design pattern.",
   "repository": {

@@ -1,0 +1,6 @@
+
+> MyVirtualAgent@0.5.1 start /home/marshall/git/Cognitive-Computing-P1
+> node app.js
+
+Confidence Threshold: 0.75
+2017/09/27

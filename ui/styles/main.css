@@ -94,7 +94,7 @@ hr {
 
 a {
     font-family: "Helvetica Neue for IBM-Bold";
-    color: #734098;
+    color: #DA1E05;
     text-decoration: none;
     background-color: transparent;
     cursor: pointer;
@@ -277,7 +277,7 @@ html, body {
 
 
 .dialog-header-chatting .dialog-header-inner, .dialog-header-preview .dialog-header-inner {
-    background-color: #562F72;
+    background-color: #DA1E05;
     height: 3em;
 }
 
@@ -725,7 +725,7 @@ html, body {
     display: inline-block;
     left: 0px;
     margin-top: 3px;
-    background-color:#9A61CC;
+    background-color:#DA1E05;
     border-radius: 2em;
     width: 4px;
 }
