@@ -1,9 +1,19 @@
 applications:
 - path: .
-  memory: 512M
+  memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: <enter_name_here>
-  host: <enter_same as above_name_here>
+  name: Poly Virtual Agent
+  host: Poly-Virtual-Agent
   disk_quota: 1024M
-  command: npm start
+  services:
+  - Discovery-8u
+  - Conversation-ns
+  - Poly Virtual Agent-cloudantNoSQLDB
+  env:
+    workspace_id: d22bfd60-a2d0-4eaa-b58b-e1f62ffe2765
+    collection_id: d76e42d2-94c8-4372-9eb2-e8d39c4738ff
+    environment_id: d3fea7a4-5a7d-4b99-be8f-d88ee1936f19
+    intent_confidence: '0.75'
+    conversation_version: '2017-05-26'
+    discovery_version: '2017-10-16'
